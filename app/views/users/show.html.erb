@@ -1,0 +1,72 @@
+<!------ Include the above in your HEAD tag ---------->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<div class="container">
+  <div class="cardprofil">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= link_to "Modifier", edit_user_registration_path, :class =>"btn btn-secondary"%>
+      </div>
+      <div class="col-md-7 ">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h1>Salut <%= current_user.first_name %> !</h1>
+          </div>
+          <div class="panel-body">
+            <div class="box box-info">
+              <div class="box-body">
+                <div class="col-sm-6">
+                  <div  style="align-center"><img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+                    <!--Upload Image Js And Css-->
+                  </div>
+                  <br>
+                  <!-- /input-group -->
+                </div>
+                <div class="col-sm-6">
+                  <h5 style="color:#00b1b1;"> </h5>
+                </span>
+                <span>
+                  <p><%= current_user.description %></p>
+                </span>
+              </div>
+              <div class="clearfix"></div>
+              <hr style="margin:5px 0 5px 0;">
+              <div class="col-sm-5 col-xs-6 tital " >Ton prénom:</div>
+              <div class="col-sm-7 col-xs-6 ">
+                <%= current_user.first_name %>
+              </div>
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+              <div class="col-sm-5 col-xs-6 tital " >Ton nom:</div>
+              <div class="col-sm-7">
+                <%= current_user.last_name %>
+              </div>
+              <div class="clearfix"></div>
+              <div class="bot-border"></div>
+              <div class="col-sm-5 col-xs-6 tital " >Email:
+              </div>
+              <%= current_user.email %></div>
+            <div class="clearfix"></div>
+            <div class="bot-border"></div>
+            <div class="col-sm-5 col-xs-6 tital " >Creation du compte:</div>
+            <div class="col-sm-7"><%= current_user.created_at.strftime("%d/%m/%Y") %></div>
+            <div class="clearfix"></div>
+            <div class="bot-border"></div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <% @event.each do |e|%>
+        </div>
+        <h2><%=e.title%></h2>
+        <p><%=e.description%> </p>
+        <%= link_to "Lien vers l'évènement", event_path(e.id), :class => "btn btn-info"%>
+        <br>
+        <br>
+        <br>
+      </div>
+    <% end %>
+  </div>
+</div>
+</div>
+</div>
+</div>
