@@ -4,14 +4,8 @@ class UsersController < ApplicationController
 
   def show
     @event = Event.where(organizer: current_user)
+    @user = current_user
   end
 
   private
-
-  def is_good_user?
-    unless current_user == User.find(params[:id])
-      flash[:notice_bad] = "Tu essaie de filouter la"
-      redirect_to root_path
-    end
-  end
 end

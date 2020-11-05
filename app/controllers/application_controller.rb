@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
 
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :description, :last_name, :email, :password, :current_password) }
   end
+
+  def is_good_user?
+    unless current_user == User.find(params[:id])
+      flash[:notice_bad] = "Tu essaie de filouter la"
+      redirect_to root_path
+    end
+  end
 end

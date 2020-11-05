@@ -15,7 +15,21 @@
             <div class="box box-info">
               <div class="box-body">
                 <div class="col-sm-6">
-                  <div  style="align-center"><img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+                  <div  style="align-center">
+                    <%if @user.picture.attached?%>
+                      <%= image_tag @user.picture, alt: 'avatar', id: "profile-image1", class: "img-circle img-responsive"%>
+                      <%= form_tag user_pictures_path(@user), multipart: true do %>
+                        <%= file_field_tag :avatar %>
+                        <%= submit_tag "mettre à jour" %>
+                      <% end %>
+                    <%else%>
+                      <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+                      <h3>Changer d'avatar ?</h3>
+                      <%= form_tag user_pictures_path(@user), multipart: true do %>
+                        <%= file_field_tag :avatar %>
+                        <%= submit_tag "mettre à jour" %>
+                      <% end %>
+                    <%end%>
                     <!--Upload Image Js And Css-->
                   </div>
                   <br>
@@ -59,7 +73,7 @@
         </div>
         <h2><%=e.title%></h2>
         <p><%=e.description%> </p>
-        <%= link_to "Lien vers l'évènement", event_path(e.id), :class => "btn btn-info"%>
+        <%= link_to "Modifier Event", edit_event_path(e.id),  :class => "btn btn-info"%>
         <br>
         <br>
         <br>

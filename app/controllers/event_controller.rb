@@ -5,6 +5,16 @@ class EventController < ApplicationController
     @event = Event.all
   end
 
+  def edit
+    @event = Event.find(params[:id])
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    post_params = params.require(:event).permit(:title, :start_date, :duration, :description, :price, :location)
+    @event.update(post_params)
+  end
+
   def new
     @new_event = Event.new
   end
@@ -19,7 +29,7 @@ class EventController < ApplicationController
                               "organizer_id" => current_user.id)
 
     if @new_event.save
-      redirect_to event_path(@new_event.id)
+      redirect_to edit_event_path(@new_event.id)
     end
   end
 
@@ -52,8 +62,5 @@ class EventController < ApplicationController
     @event = Event.find(params[:id])
     @end_date = @event.start_date + (@event.duration * 60)
     @users = User.where(id: @event.user_ids)
-  end
-
-  def registered_users
   end
 end

@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-  resources :event
   devise_for :users
 
   root "event#index"
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resources :pictures, only: [:create]
+    resources :avatars
+  end
   resources :charges
+
   resources :attendances
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :event do
+    resources :charges
+    resources :attendances
+    resources :avatars, only: [:create]
+  end
 end

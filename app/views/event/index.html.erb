@@ -15,14 +15,16 @@
           <div class="row">
             <div class="cardevent">
               <% @event.each do |e|%>
-                <div class="col-md-4">
-                  <h2><%=e.title%></h2>
-                  <p><%=e.description%> </p>
-                  <%= link_to "Lien vers l'évènement", event_path(e.id), :class => "btn btn-info"%>
-                  <br>
-                  <br>
-                  <br>
-                </div>
+                <%if e.avatar.attached?%>
+                  <div class="col-md-4">
+                    <h2><%=e.title%></h2>
+                    <p><%=e.description%> </p>
+                    <%= link_to "Lien vers l'évènement", event_path(e.id), :class => "btn btn-info"%>
+                    <br>
+                    <br>
+                    <br>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>

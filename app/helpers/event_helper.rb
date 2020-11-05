@@ -10,12 +10,4 @@ module EventHelper
       true
     end
   end
-
-  def registered_users
-    @registered_users = []
-    attendancees = Attendance.where(event_id: params[:id])
-    attendancees.each do |att|
-      @registered_users << User.where(id: att)
-    end
-  end
 end
