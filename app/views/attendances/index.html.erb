@@ -1,1 +1,6 @@
-<p> PROUUUUUUUUUUUUUUUT</p>
+<%@users.each do |usr|%>
+  <p><%=usr.first_name%></p>
+  <p><%=usr.last_name%></p>
+  <p><%=usr.email%></p>
+<%end%>
+<%= link_to "Gérer mon évènement", edit_event_path(@event.id), :class =>"btn btn-outline-warning"  %>

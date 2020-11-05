@@ -6,9 +6,6 @@ Rails.application.routes.draw do
     resources :pictures, only: [:create]
     resources :avatars
   end
-  resources :charges
-
-  resources :attendances
 
   resources :event do
     resources :charges

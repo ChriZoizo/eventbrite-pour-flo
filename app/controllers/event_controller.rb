@@ -61,6 +61,14 @@ class EventController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @end_date = @event.start_date + (@event.duration * 60)
-    @users = User.where(id: @event.user_ids)
+
+    @attendance = @event.attendances.find_by(user_id: current_user.id, event_id: @event.id)
+    @prout = @attendance.user_id
+  end
+
+  def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+    redirect_to root_path
   end
 end

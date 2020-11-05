@@ -36,6 +36,7 @@
       </div>
       <br />
       <%= submit_tag "Modifier", class: "btn btn-primary" %>  <%= link_to "Revenir à l'accueil", root_path, :class => 'btn btn-info'%>
+      <%= button_to "Supprimer", @event, :method => :delete, data: {confirm: "T'es sur ?"}, :class => 'btn btn-danger'%>
     </div>
   <% end %>
 </form>

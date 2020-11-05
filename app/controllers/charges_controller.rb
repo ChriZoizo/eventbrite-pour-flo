@@ -9,29 +9,24 @@ class ChargesController < ApplicationController
   end
 
   def create
-    # Amount in cents
     @event = Event.find_by(id: params[:event_id])
-    if is_free?(@event)
-      Attendance.create(user_id: current_user.id, event_id: @event.id)
-      redirect_to event_path(@event.id)
-    else
-      customer = Stripe::Customer.create({
-        email: params[:stripeEmail],
-        source: params[:stripeToken],
-      })
-      charge = Stripe::Charge.create({
-        customer: customer.id,
-        amount: @event.price.to_i * 100,
-        description: "Inscription de #{current_user.email}",
-        currency: "eur",
-      })
-    end
+
+    amount = @event.price.to_i * 100
+
+    customer = Stripe::Customer.create({
+      email: params[:stripeEmail],
+      source: params[:stripeToken],
+    })
+    charge = Stripe::Charge.create({
+      customer: customer.id,
+      amount: @event.price.to_i * 100,
+      description: "Inscription de #{current_user.email}",
+      currency: "eur",
+    })
 
     if customer.save && charge.save
       Attendance.create(user_id: current_user.id, event_id: @event.id, stripe_customer_id: customer.id)
-      redirect_to event_path(@event.id)
-    else
-      render "new"
+      redirect_to root_path
     end
   rescue Stripe::CardError => e
     flash[:error] = e.message

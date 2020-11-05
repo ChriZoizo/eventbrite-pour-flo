@@ -23,7 +23,7 @@
                 <%= file_field_tag :avatar %>
                 <%= submit_tag "mettre à jour" %>
               <% end %>
-            <% elsif @event.avatar.attached?%>%
+            <% elsif @event.avatar.attached?%>
               <%= image_tag @event.avatar, alt: 'avatar' %>
             <%end%>
             <h4> Prix Entrée : <%= @event.price %>€ </h4>
@@ -34,63 +34,12 @@
             <h5 class="card-text"><%= @event.description%></h5>
             <br>
             <p><%= "Contact: #{@event.organizer.email}"%></p>
-            <% if can_join? == true %>
-              <!-- FORMULAIRE DE PAIEMENT-->
-              <%= form_tag attendances_path do %>
-                <article>
-                  <% if flash[:error].present? %>
-                    <div id="error_explanation">
-                      <p><%= flash[:error] %></p>
-                    </div>
-                  <% end %>
-                  <label class="amount">
-                    <span>Entrée : <%=@event.price%>€</span>
-                  </label>
-                </article>
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-description="Inscription a l'Event"
-          data-amount=<%=@event.price.to_i * 100%>
-          data-currency="eur"
-          data-locale="auto"></script>
-              <% end %>
-            <%end%>
-          </div>
-        </div>
-      </div>
-      <div>
-        <ul class="list-group">
-          <%@users.each do |usr|%>
-            <li class="list-group-item">
-              <h4> <%=usr.first_name%> <%=usr.last_name%></h4>
-              <h5><%=usr.email%></h5>
-            </li>
-            <br>
-          <%end%>
-        </div>
-        <% if flash[:alert] %>
-          <div class="alert alert-danger">
-            <strong>Ah !</strong> Tu t'es déjà inscris à l'évènement !
-          </div>
-        <% end %>
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title"><%= @event.title %></h5>
-            <p class="card-text">Description : <%=@event.description%></p>
-            <p class="card-text">Prix : <%=@event.price%> €</p>
-            <p class="card-text">Location : <%=@event.location%></p>
-            <p class="card-text"><%=@event.attendances.count%> participant(s)</p>
-            <p class="card-text">Début de l'évènement : <%=@event.start_date.strftime('%d/%m/%Y %H:%M')%></p>
-            <p class="card-text">Fin de l'évènement : <%=@end_date.strftime('%d/%m/%Y %H:%M')%></p>
-          </div>
-          <div class="card-footer">
             <small class="text-muted">Pour joindre le créateur de l'évènement, contactez  <%=@event.organizer.first_name%> <%=@event.organizer.last_name%> via <%=@event.organizer.email%></small>
             <% if current_user.id == @event.organizer.id %>
-              <%= link_to "Gérer mon évènement", edit_event_path(@event.id), :class =>"btn btn-outline-warning"  %> <br/>
-            <% elsif @attendance %>
-              Vous êtes inscrit(e) à cet évènement ! 
-            <% else %>
+              <%= link_to "Gérer mon évènement", event_attendances_path(@event.id), :class =>"btn btn-outline-warning"  %> <br/>
+            <% elsif is_free? && @prout != current_user.id %>
+              <%= link_to "ParticiperGratuitement", event_attendances_path(@event.id), method: :create, :class =>"btn btn-outline-warning"  %> <br/>
+            <% elsif @prout != current_user.id %>
               <%= link_to "Participer", new_event_charge_path(params[:id]), :class =>"btn btn-outline-warning"  %> <br/>
             <% end %>
           <% end %>
