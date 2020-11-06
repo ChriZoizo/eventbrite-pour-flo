@@ -37,11 +37,18 @@
             <small class="text-muted">Pour joindre le créateur de l'évènement, contactez  <%=@event.organizer.first_name%> <%=@event.organizer.last_name%> via <%=@event.organizer.email%></small>
             <% if current_user.id == @event.organizer.id %>
               <%= link_to "Gérer mon évènement", event_attendances_path(@event.id), :class =>"btn btn-outline-warning"  %> <br/>
-            <% elsif is_free? && @prout != current_user.id %>
-              <%= link_to "ParticiperGratuitement", event_attendances_path(@event.id), method: :create, :class =>"btn btn-outline-warning"  %> <br/>
-            <% elsif @prout != current_user.id %>
+            <% elsif is_free? && @attendance == false %>
+              <%= link_to "Participer Gratuitement", event_attendances_path(@event.id), method: :create, :class =>"btn btn-outline-warning"  %> <br/>
+            <% elsif @attendance == false%>
               <%= link_to "Participer", new_event_charge_path(params[:id]), :class =>"btn btn-outline-warning"  %> <br/>
+            <%else%>
+              <h5>Vous participez deja a l'evenement</h5>
             <% end %>
+            <%@users.each do |usr|%>
+              <p><%=usr.first_name%></p>
+              <p><%=usr.last_name%></p>
+              <p><%=usr.email%></p>
+            <%end%>
           <% end %>
         </div>
       </div>
