@@ -1,0 +1,13 @@
+<% @events.each do |e|%>
+  <%if e.avatar.attached?%>
+    <div class="col-md-4">
+      <h2><%=e.title%></h2>
+      <p><%=e.description%> </p>
+      <%= link_to "Lien vers l'évènement", admin_event_path(e.id), :class => "btn btn-info"%>
+      <%= button_to "Supprimer", e, :method => :delete, data: {confirm: "Confirmer?"}, :class => 'btn btn-danger'%>
+      <br>
+      <br>
+      <br>
+    </div>
+  <% end %>
+<% end %>

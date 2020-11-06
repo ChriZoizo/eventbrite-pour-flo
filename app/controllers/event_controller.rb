@@ -47,4 +47,11 @@ class EventController < ApplicationController
   end
 
   private
+
+  def is_validated?
+    @event = Event.find(params[:id])
+    unless @event.validated == true
+      return true
+    end
+  end
 end
